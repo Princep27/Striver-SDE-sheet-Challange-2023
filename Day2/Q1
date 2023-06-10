@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& arr) {
+        int n = arr.size();
+        int m = arr[0].size();
+
+        int maxi = 1e4;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                arr[i][j] = maxi*(arr[i][j]+1000);
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                int n2 = arr[i][j]/maxi;
+                int n1 = arr[j][n-1-i]/maxi;
+
+                arr[j][n-1-i] = n1*maxi + n2;
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                arr[i][j] = arr[i][j]%maxi - 1000;
+            }
+        }
+    }
+};
