@@ -1,0 +1,5 @@
+ void deleteNode(ListNode* node) {
+        ListNode *cur = node, *nxt = node->next;
+        cur->val = nxt->val;
+        cur->next = nxt->next;
+ }
