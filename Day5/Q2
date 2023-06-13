@@ -1,0 +1,11 @@
+ListNode* middleNode(ListNode* head) {
+        ListNode *slow = head, *fast = head;
+        if(head == NULL) return NULL;
+        while(true){
+            if(fast == NULL || fast->next == NULL)
+               return slow;
+            
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+    }
