@@ -1,0 +1,44 @@
+void rev(ListNode *start,ListNode *end){
+        ListNode *prev = NULL,*cur = start,*nxt = NULL;
+        while(cur){
+            nxt = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = nxt;
+
+            if(prev == end)
+               break;
+        }
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(k == 1)
+           return head;
+
+        ListNode *start = head, *end = head, *prev = NULL, *Head = NULL;
+        int cnt = 1;
+
+        while(end){
+            if(cnt == k){
+                ListNode *nxt = end->next;
+                rev(start,end);
+
+                if(prev) prev->next = end;
+                start->next = nxt;
+
+                if(Head == NULL)
+                   Head = end;
+                
+                cnt = 1;
+                prev = start;
+                start = start->next;
+                end = start;
+                
+            }else{
+                end = end->next;
+                cnt++;
+            }
+        }
+
+        return Head;
+    }
