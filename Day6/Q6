@@ -1,0 +1,41 @@
+Node *flatten(Node *root)
+{
+    if(root == NULL) return root;
+   
+    Node *ans = root;
+   
+    while(root->next){
+       
+       Node *first = root, *second = root->next, *tail = first;
+       first->next = second->next;
+       
+       
+       first = first->bottom;
+       while(first && second){
+           
+            if(first->data <= second->data){
+                tail->bottom = first;
+                first = first->bottom;
+            }else{
+                tail->bottom = second;
+                second = second->bottom;
+            }
+            
+            tail = tail->bottom;
+       }
+       
+       while(first){
+           tail->bottom = first;
+           tail = tail->bottom;
+           first = first->bottom;
+       }
+       
+       while(second){
+           tail->bottom = second;
+           tail = tail->bottom;
+           second = second->bottom;
+       }
+    }
+   
+    return ans;
+}
