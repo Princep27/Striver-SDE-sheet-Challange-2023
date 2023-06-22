@@ -1,0 +1,35 @@
+class Solution {
+public:
+    bool check(string s1){
+        string s2 = s1;
+        reverse(s2.begin(),s2.end());
+        if(s1 == s2) return true;
+        return false;
+    }
+
+    void solve(vector<vector<string>> &ans,vector<string> &v,string s,int i,int n){
+        if(i == n){
+            ans.push_back(v);
+            return;
+        }
+
+        for(int j=i;j<n;j++){
+            string tmp = s.substr(i,j-i+1);
+            if(check(tmp)){
+                v.push_back(tmp);
+                solve(ans,v,s,j+1,n);
+                v.pop_back();
+            }
+        }
+    }
+
+    vector<vector<string>> partition(string s) {
+        int n = s.length();
+        vector<vector<string>> ans;
+        vector<string> v;
+        string temp;
+
+        solve(ans,v,s,0,n);
+        return ans;
+    }
+};
