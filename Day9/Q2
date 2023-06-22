@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<int>> ans;
+    unordered_map<int,int> mp;
+    void solve(vector<int> &arr,vector<int> &temp,int i,int n){
+        if(i == n){
+            ans.push_back(temp);
+            return;
+        }
+
+        int cnt = mp[arr[i]];
+
+        solve(arr,temp,i+1,n);
+        for(int j=0;j<cnt;j++){
+            temp.push_back(arr[i]);
+            solve(arr,temp,i+1,n);
+            
+        }        
+    }
+
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<int> temp;
+        vector<int> arr;
+
+        int n = nums.size();
+        for(int i=0;i<n;i++)  mp[nums[i]]++;  
+        for(auto it:mp) arr.push_back(it.first);
+        
+
+        solve(arr,temp,0,arr.size());
+        return ans;
+    }
+};
