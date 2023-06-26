@@ -1,0 +1,28 @@
+int findPlatform(int arr[], int dep[], int n)
+    {
+        vector<pair<int,int>> vp;
+        for(int i=0;i<n;i++)
+           vp.push_back({arr[i],dep[i]});
+        
+        sort(vp.begin(),vp.end());
+        
+    	priority_queue<int,vector<int>,greater<int>> pq;
+    	int ans = 1;
+    	pq.push(vp[0].second);
+    	
+    	int cur = 1;
+    	for(int i=1;i<n;i++){
+    	    
+    	    while(!pq.empty() && (pq.top() < vp[i].first)){
+    	       pq.pop();
+    	       cur--;
+    	    }
+    	      
+    	    pq.push(vp[i].second);
+    	    cur++;
+    	    
+    	    ans = max(ans,cur);
+    	}
+    	
+    	return ans;
+    }
