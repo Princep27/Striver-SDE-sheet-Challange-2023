@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 
+bool possible(vector<int> &v,long long mid,int k){
+    long long cnt = 1, sum = 0;
+	int n = v.size();
+	int i = 0;
+
+	while(i < n){
+		sum += (long long)v[i];
+		if(sum > mid){
+			cnt++;
+			sum = v[i];
+		}
+		i++;
+	}
+
+	if(cnt <= k) return true;
+	return false;
+}
+
+long long ayushGivesNinjatest(int n, int m, vector<int> time) 
+{	
+	long long l = 0, r = 0,ans = 0;
+	for(int i=0;i<m;i++){
+		 r += time[i];
+		 l = max(l,(long long)time[i]);
+	}
+
+	while( l <= r){
+		long long mid = l+ (r-l)/2;
+
+		if(possible(time,mid,n)){
+			ans = mid;
+			r = mid-1;
+		}else{
+			l = mid+1;
+		}
+	}
+
+	return ans;
+}
