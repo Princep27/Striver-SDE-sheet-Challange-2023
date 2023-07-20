@@ -1,0 +1,20 @@
+void dfs(TreeNode *root,int depth,int &ans){
+        if(root == NULL)
+            return;
+            
+        if(root->left == NULL && root->right == NULL){
+            ans = max(ans,depth);
+            return;
+        }
+
+        dfs(root->left,depth+1,ans);
+        dfs(root->right,depth+1,ans);
+    }
+
+    int maxDepth(TreeNode* root) {
+        int ans = 0;
+        if(root == NULL) return ans;
+
+        dfs(root,1,ans);
+        return ans;
+    }
