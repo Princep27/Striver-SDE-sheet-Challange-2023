@@ -1,0 +1,20 @@
+int solve(TreeNode *root,int &ans){
+        if(root == NULL)
+           return 0;
+        
+        if(root->left == NULL && root->right == NULL)
+           return 1;
+
+        int l = solve(root->left,ans);
+        int r = solve(root->right,ans);
+        if(abs(l- r) > 1)
+           ans = 0;
+        
+        return max(l,r) + 1;
+    }
+    
+    bool isBalanced(TreeNode* root) {
+        int ans = 1;
+        solve(root,ans);
+        return ans;
+    }
