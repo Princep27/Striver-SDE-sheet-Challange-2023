@@ -1,0 +1,16 @@
+void solve(TreeNode *a,TreeNode *b,int &ans){
+        if(a == NULL && b == NULL) return; 
+        if((a && b == NULL) || (b && a == NULL) || (a->val != b->val)){
+            ans = 0;
+            return;
+        }
+
+        solve(a->left,b->left,ans);
+        solve(a->right,b->right,ans);
+    }
+
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        int ans =  1;
+        solve(p,q,ans);
+        return ans;
+    }
