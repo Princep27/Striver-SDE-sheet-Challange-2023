@@ -1,0 +1,47 @@
+void leaf(TreeNode<int> *root,vector<int> &ans){
+    if(root == NULL) return;
+    if(root->left == NULL && root->right == NULL){
+        ans.push_back(root->data);
+        return;
+    }
+    leaf(root->left,ans);
+    leaf(root->right,ans);
+}
+
+vector<int> traverseBoundary(TreeNode<int>* root){
+    vector<int> ans,l,b,r;
+    if(root == NULL) return ans;
+    if(root->left == NULL && root->right == NULL) return {root->data};
+
+    ans.push_back(root->data);
+
+    TreeNode<int> *temp = root->left;
+    while(temp){
+        while(temp->left){
+            l.push_back(temp->data);
+            temp = temp->left;
+        }
+        if(temp->right)
+        l.push_back(temp->data);
+        temp = temp->right;
+    }
+
+    leaf(root,b);
+
+    temp = root->right;
+    while(temp){
+        while(temp->right){
+            r.push_back(temp->data);
+            temp = temp->right;
+        }
+        if(temp->left)
+        r.push_back(temp->data);
+        temp = temp->left;
+    }
+
+    for(int i=0;i<l.size();i++) ans.push_back(l[i]);
+    for(int i=0;i<b.size();i++) ans.push_back(b[i]);
+    for(int i=r.size()-1;i>=0;i--) ans.push_back(r[i]);
+
+    return ans;
+}
