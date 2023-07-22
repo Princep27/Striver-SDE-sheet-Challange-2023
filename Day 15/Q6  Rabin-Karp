@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int mod = 1e9+7;
+    bool check(string &s1, string &s2){
+        int n = s1.size(), m = s2.size();
+
+        long target = 0, hash  = 0;
+        long mul = 1;
+        for(int i=0;i<m;i++){
+            target = (target + mul*(s2[m-1-i]-'0'+1))%mod;
+            mul = (mul*27)%mod;
+        }
+
+        mul = 1;
+        for(int i=m-1;i>=0;i--){
+            hash = (hash + mul*(s1[i]-'0'+1))%mod;
+            mul = (mul*27)%mod;
+        }
+
+        if(target == hash){
+            for(int i=0;i<m;i++){
+                if(s1[i] != s2[i])
+                break;
+
+                if(i == m-1)
+                return true;
+            }
+        }
+
+        long p = 1;
+        for(int i=0;i<m-1;i++) p = (p*27)%mod;
+        
+        for(int i=m; i<n; i++){
+            int front = i-m, end = i;
+            hash =  ((27*(mod + hash - ((s1[front]-'0'+1)*p)%mod ) %mod )%mod + (s1[end]-'0'+1))%mod;
+            if(hash == target)
+            return true;
+        }
+
+        return false;
+    }
+
+    int repeatedStringMatch(string a, string b) {
+        int n = a.length(), m = b.length(),cnt = 1;
+
+        if(m == 0) return 0;
+        if(n == 0) return -1;
+
+        string temp = a;
+        while(a.size() < b.size()){
+            a = a+temp; cnt++;
+        }        
+        
+        if(check(a,b)) return cnt;
+        a = a+temp;
+        if(check(a,b)) return cnt+1;
+        return -1;
+    }
+};
