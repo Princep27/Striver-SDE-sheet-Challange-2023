@@ -1,0 +1,32 @@
+void solve(BinaryTreeNode<int> *root,vector<string> &ans, string &temp){
+    
+    if(root->left == NULL && root->right == NULL){
+        ans.push_back(temp);
+    }
+
+    if(root->left){
+        string str = to_string(root->left->data);
+        int m = str.length()+1;
+        temp = temp + " " + str;
+        solve(root->left,ans,temp);
+        while(m--) temp.pop_back();
+    }
+
+    if(root->right){
+        string str = to_string(root->right->data);
+        int m = str.length()+1;
+        temp = temp + " " + str;
+        solve(root->right,ans,temp);
+        while(m--) temp.pop_back();
+    }
+}
+
+vector < string > allRootToLeaf(BinaryTreeNode < int > * root) {
+    string temp;
+    vector<string> ans;
+    if(root == NULL) return ans;
+
+    temp += to_string(root->data);
+    solve(root,ans,temp);
+    return ans;
+}   
