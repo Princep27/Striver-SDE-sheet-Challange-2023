@@ -1,0 +1,29 @@
+void solve(BinaryTreeNode<int> *root,vector<vector<int>> &ans){
+    stack<pair<BinaryTreeNode<int>*,int>> st;
+
+    while(root || !st.empty()){
+        if(root){
+            st.push({root,1});
+            ans[1].push_back(root->data);
+            root = root->left;
+        }else{
+            BinaryTreeNode<int> *temp = st.top().first;
+            int cnt = st.top().second;
+            st.pop();
+
+            if(cnt == 1){
+                ans[0].push_back(temp->data);
+                st.push({temp,cnt+1});
+                root = temp->right;
+            }else{
+                ans[2].push_back(temp->data);
+            }
+        }
+    }
+}
+
+vector<vector<int>> getTreeTraversal(BinaryTreeNode<int> *root){
+    vector<vector<int>> ans(3);
+    solve(root,ans);
+    return ans;
+}
