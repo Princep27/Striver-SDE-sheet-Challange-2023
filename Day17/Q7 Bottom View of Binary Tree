@@ -1,0 +1,40 @@
+class Solution {
+  public:
+    vector <int> bottomView(Node *root) {
+        
+        unordered_map<int,int> mp;
+        vector<int> ans;
+        if(root == NULL)
+            return ans;
+        
+        int mini = 0, maxi = 0;
+        queue<pair<Node*,int>> pq;
+        pq.push({root,0});
+        
+        while(!pq.empty()){
+            int n = pq.size();
+            
+            for(int i=0;i<n;i++){
+                Node *temp = pq.front().first;
+                int pos = pq.front().second;
+                mp[pos] = temp->data;
+                
+                pq.pop();
+                
+                if(temp->left){
+                    pq.push({temp->left,pos-1});
+                    mini = min(mini,pos-1);
+                }
+                if(temp->right){
+                    pq.push({temp->right,pos+1});
+                    maxi = max(maxi,pos+1);
+                }
+            }
+        }
+        
+        for(int i=mini;i<=maxi;i++){
+            ans.push_back(mp[i]);
+        }
+        
+        return ans;
+    }
