@@ -1,0 +1,23 @@
+void inorder(TreeNode *root,vector<int> &ans){
+       stack<TreeNode*> st;
+       
+       while(root != NULL || !st.empty()){
+
+            if(root){
+                st.push(root);
+                root = root->left;
+            }else{
+                TreeNode *temp = st.top();
+                st.pop();
+
+                ans.push_back(temp->val);
+                root = temp->right;
+            }
+       }       
+    }
+
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        inorder(root,ans);
+        return ans;
+    }
