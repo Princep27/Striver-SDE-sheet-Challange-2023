@@ -1,0 +1,31 @@
+vector<int> maxCombinations(int N, int K, vector<int> &A, vector<int> &B) {
+        priority_queue<pair<int, pair<int,int>>> pq;
+        vector<int> ans;
+        
+        map<pair<int,int>,int> mp;
+        
+        sort(A.begin(),A.end(),greater<int>());
+        sort(B.begin(),B.end(),greater<int>());
+        
+        pq.push({A[0]+B[0],{0,0}});
+        
+        int t = 0;
+        while(t < K){
+            int i = pq.top().second.first;
+            int j = pq.top().second.second;
+            ans.push_back(pq.top().first);
+            
+            pq.pop();
+            if(i+1 < N && mp[{i+1,j}] == 0){
+                pq.push({A[i+1]+B[j],{i+1,j}});
+                mp[{i+1,j}] = 1;
+            }if(j+1 < N && mp[{i,j+1}] == 0){
+                pq.push({A[i]+B[j+1],{i,j+1}});
+                mp[{i,j+1}] = 1;
+            } 
+            
+            t++;
+        }
+        
+        return ans;
+    }
