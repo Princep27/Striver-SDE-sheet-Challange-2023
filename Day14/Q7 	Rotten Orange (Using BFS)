@@ -1,0 +1,46 @@
+int r[4]= {1,-1,0,0 };
+    int c[4]= {0,0 ,1,-1};
+
+    int orangesRotting(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        int rotten = 0;
+        int cnt = 0;
+
+        queue<pair<int,int>> qu;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++)
+              if(grid[i][j] == 2)
+              qu.push({i,j});
+        }
+
+        while(!qu.empty()){
+            int sz = qu.size();
+            int flag = 0;
+            for(int i=0;i<sz;i++){
+                int x = qu.front().first;
+                int y = qu.front().second;
+                qu.pop();
+
+                for(int j=0;j<4;j++){
+                    int p = x + r[j];
+                    int q = y + c[j];
+                    if(p < n && q < m && p >= 0 && q >= 0 && grid[p][q] == 1){
+                        flag++;
+                        grid[p][q] = 2;
+                        qu.push({p,q});
+                    }
+                }
+            }
+
+            if(flag) cnt++;
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j] == 1)
+                return -1;
+            }
+        }
+
+        return cnt;
+    }
