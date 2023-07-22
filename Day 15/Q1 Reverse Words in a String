@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int n = s.length();
+        string ans;
+
+        int i = n-1;
+        while(i >= 0 && s[i] == ' ') i--;
+        while(i >= 0){
+            string temp;
+            int flag = 0;
+
+            while(i >= 0 && s[i] != ' '){
+                temp += s[i];
+                flag++;
+                i--;
+            }
+
+            reverse(temp.begin(),temp.end());
+
+            if(ans != "") ans += " ";
+            ans += temp;
+            while(i >= 0 && s[i] == ' ') i--;
+        }
+
+        return ans;
+    }
+};
