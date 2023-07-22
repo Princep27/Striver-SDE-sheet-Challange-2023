@@ -1,0 +1,30 @@
+#include <bits/stdc++.h> 
+void sortStack(stack<int> &st1)
+{
+	stack<int> st2;
+	while(!st1.empty()){
+
+		while(!st1.empty() && (st2.empty() || st2.top() >= st1.top())){
+			st2.push(st1.top());
+			st1.pop();
+		}
+		
+		int cnt = 0;
+		if(!st1.empty()){
+			int temp = st1.top();
+			st1.pop();
+			while(!st2.empty() && temp > st2.top()){
+				st1.push(st2.top());
+				st2.pop();
+			}
+			st2.push(temp);
+		}
+	}
+
+	while(!st2.empty()){
+		st1.push(st2.top());
+		st2.pop();
+	}
+
+	// 1 2 5 2 7   // 7 2 5
+}
