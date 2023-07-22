@@ -1,0 +1,54 @@
+#include <bits/stdc++.h> 
+void heapify(vector<int> &pq,int index,int n){
+    int l = 2*index, r = 2*index+1;
+    int small = index;
+    if(l <= n && pq[l] < pq[small])
+       small = l;
+    if(r <= n && pq[r] < pq[small])
+       small = r;
+    
+    if(index != small){
+        swap(pq[small],pq[index]);
+        heapify(pq,small,n);
+    }
+}
+
+void remove(vector<int> &pq,int &n){
+    pq[1] = pq[n];
+    n = n-1;
+    pq.pop_back();
+    heapify(pq,1,n);
+}
+
+void insert(vector<int> &pq,int num,int &n){
+    n = n+1;
+    int i = n;
+    pq.push_back(num);
+    
+    while(i > 1){
+        int par = i/2;
+        if(pq[par] > pq[i]){
+            swap(pq[par],pq[i]);
+            i = par;
+        }else{
+            return;
+        }
+    }
+}
+
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    vector<int> ans;
+    vector<int> pq;
+    pq.push_back(0);
+    int m = 0;
+
+    for(int i=0;i<n;i++){
+        if(q[i][0] == 0)
+            insert(pq,q[i][1],m);
+        else{
+            ans.push_back(pq[1]);
+            remove(pq,m);
+        }
+    }
+    return ans;
+}
