@@ -1,0 +1,29 @@
+priority_queue<int> first;
+    priority_queue<int,vector<int>,greater<int>> last;
+    int n = 0;
+    MedianFinder() {
+    }
+    
+    void addNum(int num) {
+        n++;
+        if(first.empty() || first.top() > num){
+            first.push(num);
+        }else{
+            last.push(num);
+        }
+
+        while(first.size() > (n+1)/2){
+            last.push(first.top());
+            first.pop();
+        }
+
+        while(last.size() > n/2){
+            first.push(last.top());
+            last.pop();
+        }
+    }
+    
+    double findMedian() {
+        if(n%2) return double(first.top());
+        else return double(first.top() + last.top())/2;
+    }
