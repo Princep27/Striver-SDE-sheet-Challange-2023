@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+        string num;
+
+        int n = s.length();
+        int i = 0, isNegative = 0;
+        while( i < n && s[i] == ' ') i++;
+        if( i < n && (s[i] == '-' || s[i] == '+')){
+            if(s[i] == '-') isNegative = 1;
+            else isNegative = 0;
+            i++;
+        }
+        
+        while(i < n && s[i] <= '9' && s[i] >= '0'){
+            num += s[i]; i++;
+        }
+ 
+        cout<<num<<endl;
+        int m = num.length();
+        long ans = 0;
+        for(int i=0;i<m;i++){
+            ans = ans * 10 + (num[i]-'0');
+            if(isNegative && (-ans) < INT_MIN){
+                return INT_MIN;
+            }
+            if(!isNegative && ans > INT_MAX){
+                return INT_MAX;
+            }
+        }
+
+        if(isNegative) ans = -ans;
+        return ans;
+    }
+};
