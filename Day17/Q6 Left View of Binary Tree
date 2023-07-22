@@ -1,0 +1,25 @@
+void bfs(Node *root,vector<int> &ans){
+    queue<Node*> q;
+    if(root == NULL) return;
+    
+    q.push(root);
+    while(!q.empty()){
+        int n = q.size();
+        ans.push_back(q.front()->data);
+
+        while(n--){
+            if(q.front()->left)
+              q.push(q.front()->left);
+            if(q.front()->right)
+              q.push(q.front()->right);
+            q.pop();
+        }        
+    }
+}
+
+vector<int> leftView(Node *root)
+{
+   vector<int> ans;
+   bfs(root,ans);
+   return ans;
+}
