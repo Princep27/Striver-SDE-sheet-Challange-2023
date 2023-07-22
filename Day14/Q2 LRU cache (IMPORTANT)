@@ -1,0 +1,71 @@
+class LRUCache {
+public:
+    struct Node{
+        int data;
+        int keyy;
+        Node *next,*prev;
+        Node(int num,int k){
+            data = num;
+            keyy = k;
+            next = NULL;
+            prev = NULL;
+        }
+    };
+
+    unordered_map<int,Node*> mp;
+    Node *start = NULL, *end = NULL;
+    int qsize;
+
+    LRUCache(int capacity) {
+        mp.clear();
+        qsize = capacity;
+        start = new Node(0,0);
+        end = new Node(0,0);
+        start->next = end;
+        end->prev = start;
+    }
+
+    void nodeInsert(int key, int val){
+        Node *temp = new Node(val,key);
+
+        start->next->prev = temp;
+        temp->next = start->next;
+        temp->prev = start;
+        start->next = temp;
+        
+        mp[key] = temp;
+    }
+
+    void nodeDelete(Node *temp){
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        mp.erase(temp->keyy);
+        delete temp;
+    }
+    
+    int get(int key) {
+        if(mp.find(key) == mp.end())
+           return -1;
+        
+        Node *temp = mp[key];
+        int val = temp->data;
+
+        nodeDelete(temp);
+        nodeInsert(key,val);
+        return val;
+    }
+    
+    void put(int key, int value) {
+        if(mp.find(key)!=mp.end()){
+            Node *temp = mp[key];
+
+            nodeDelete(temp);
+            nodeInsert(key,value);
+        }else{
+            if(mp.size() == qsize){
+                nodeDelete(end->prev);
+            }
+            nodeInsert(key,value);
+        }
+    }
+};
